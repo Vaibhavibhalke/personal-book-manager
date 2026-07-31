@@ -59,24 +59,24 @@ A full-stack reading list app built with Next.js, MongoDB, and JWT authenticatio
 
 1. **Clone the repository**
 
-   ```bash
+   \`\`\`bash
    git clone <your-repo-url>
    cd book-manager
-   ```
+   \`\`\`
 
 2. **Install dependencies**
 
-   ```bash
+   \`\`\`bash
    npm install
-   ```
+   \`\`\`
 
 3. **Configure environment variables**
 
    Copy `.env.example` to `.env.local` and fill in your values:
 
-   ```bash
+   \`\`\`bash
    cp .env.example .env.local
-   ```
+   \`\`\`
 
    | Variable      | Description                                      |
    | ------------- | ------------------------------------------------ |
@@ -85,15 +85,15 @@ A full-stack reading list app built with Next.js, MongoDB, and JWT authenticatio
 
 4. **Run the development server**
 
-   ```bash
+   \`\`\`bash
    npm run dev
-   ```
+   \`\`\`
 
    Open [http://localhost:3000](http://localhost:3000) in your browser.
 
 ## Project Structure
 
-```
+\`\`\`
 src/
 ├── app/
 │   ├── api/
@@ -107,7 +107,7 @@ src/
 ├── models/                # Mongoose schemas (User, Book)
 ├── middleware.ts          # Route protection
 └── types/                 # Shared TypeScript types
-```
+\`\`\`
 
 ## API Routes
 
@@ -134,9 +134,9 @@ src/
 
 ## Scripts
 
-```bash
+\`\`\`bash
 npm run dev      # Start development server
 npm run build    # Build for production
 npm run start    # Start production server
 npm run lint     # Run ESLint
-```
+\`\`\`
