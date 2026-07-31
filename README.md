@@ -5,7 +5,7 @@ A full-stack reading list app built with Next.js, MongoDB, and JWT authenticatio
 ## Features
 
 - **Authentication** — Sign up, log in, and log out with JWT stored in httpOnly cookies
-- **Book collection** — Add, edit, and delete books (title, author, tags, status)
+- **Book collection** — Add, edit, and delete books with title, author, tags, and status
 - **Reading statuses** — Want to Read, Reading, Completed
 - **Filters** — Filter your collection by status or tag
 - **Dashboard** — Overview stats and quick status updates
@@ -16,7 +16,7 @@ A full-stack reading list app built with Next.js, MongoDB, and JWT authenticatio
 
 ![Login page](./screenshots/login.png)
 
-### Sign up
+### Sign Up
 
 ![Sign up page with existing account error](./screenshots/signup-error.png)
 
@@ -26,7 +26,7 @@ A full-stack reading list app built with Next.js, MongoDB, and JWT authenticatio
 
 ![Dashboard with stats](./screenshots/dashboard-stats.png)
 
-### Add & manage books
+### Add & Manage Books
 
 ![Add a book and view collection](./screenshots/add-book-collection.png)
 
@@ -36,107 +36,210 @@ A full-stack reading list app built with Next.js, MongoDB, and JWT authenticatio
 
 ![No books match filters](./screenshots/filter-no-results.png)
 
+### Login Filled
+
 ![Login page filled in](./screenshots/login-filled.png)
 
 ## Tech Stack
 
-| Layer    | Technology                    |
-| -------- | ----------------------------- |
-| Frontend | Next.js 16 (App Router)       |
-| Styling  | Tailwind CSS                  |
-| Backend  | Next.js API Routes            |
-| Database | MongoDB (Mongoose)            |
-| Auth     | JWT (jose) + bcrypt           |
+| Layer | Technology |
+|---|---|
+| Frontend | Next.js 16 (App Router) |
+| Styling | Tailwind CSS |
+| Backend | Next.js API Routes |
+| Database | MongoDB (Mongoose) |
+| Authentication | JWT (jose) + bcrypt |
 
 ## Getting Started
 
 ### Prerequisites
 
 - Node.js 18+
-- MongoDB (local or [MongoDB Atlas](https://www.mongodb.com/atlas))
+- MongoDB (local installation or MongoDB Atlas)
 
 ### Setup
 
-1. **Clone the repository**
+#### 1. Clone the repository
 
-   \`\`\`bash
-   git clone <your-repo-url>
-   cd book-manager
-   \`\`\`
+```bash
+git clone https://github.com/Vaibhavibhalke/personal-book-manager.git
+cd personal-book-manager
+```
 
-2. **Install dependencies**
+#### 2. Install dependencies
 
-   \`\`\`bash
-   npm install
-   \`\`\`
+```bash
+npm install
+```
 
-3. **Configure environment variables**
+#### 3. Configure environment variables
 
-   Copy `.env.example` to `.env.local` and fill in your values:
+Create a `.env.local` file in the project root.
 
-   \`\`\`bash
-   cp .env.example .env.local
-   \`\`\`
+```env
+MONGODB_URI=your_mongodb_connection_string
+JWT_SECRET=your_long_random_secret
+```
 
-   | Variable      | Description                                      |
-   | ------------- | ------------------------------------------------ |
-   | `MONGODB_URI` | MongoDB connection string                        |
-   | `JWT_SECRET`  | Secret key for signing JWT tokens (use a strong random string in production) |
+You can use `.env.example` as a reference.
 
-4. **Run the development server**
+> Never commit `.env.local` or your MongoDB credentials to GitHub.
 
-   \`\`\`bash
-   npm run dev
-   \`\`\`
+#### 4. Run the development server
 
-   Open [http://localhost:3000](http://localhost:3000) in your browser.
+```bash
+npm run dev
+```
+
+Open [http://localhost:3000](http://localhost:3000) in your browser.
 
 ## Project Structure
 
-\`\`\`
+```text
 src/
 ├── app/
 │   ├── api/
-│   │   ├── auth/          # signup, login, logout, me
-│   │   └── books/         # CRUD endpoints
-│   ├── dashboard/         # Protected dashboard page
+│   │   ├── auth/
+│   │   │   ├── login/
+│   │   │   ├── logout/
+│   │   │   ├── me/
+│   │   │   └── signup/
+│   │   └── books/
+│   │       └── [id]/
+│   ├── dashboard/
 │   ├── login/
 │   └── signup/
-├── components/            # UI components
-├── lib/                   # DB connection, auth helpers
-├── models/                # Mongoose schemas (User, Book)
-├── middleware.ts          # Route protection
-└── types/                 # Shared TypeScript types
-\`\`\`
+│
+├── components/
+├── lib/
+├── models/
+├── middleware.ts
+└── types/
+```
 
 ## API Routes
 
-| Method | Route              | Description              |
-| ------ | ------------------ | ------------------------ |
-| POST   | `/api/auth/signup` | Create a new account     |
-| POST   | `/api/auth/login`  | Log in                   |
-| POST   | `/api/auth/logout` | Log out                  |
-| GET    | `/api/auth/me`     | Get current user         |
-| GET    | `/api/books`       | List user's books        |
-| POST   | `/api/books`       | Add a book               |
-| PUT    | `/api/books/[id]`  | Update a book            |
-| DELETE | `/api/books/[id]`  | Delete a book            |
+| Method | Route | Description |
+|---|---|---|
+| POST | `/api/auth/signup` | Create a new account |
+| POST | `/api/auth/login` | Log in |
+| POST | `/api/auth/logout` | Log out |
+| GET | `/api/auth/me` | Get current user |
+| GET | `/api/books` | List user's books |
+| POST | `/api/books` | Add a book |
+| PUT | `/api/books/[id]` | Update a book |
+| DELETE | `/api/books/[id]` | Delete a book |
+
+## Authentication
+
+The application uses JWT-based authentication.
+
+- Passwords are securely hashed using `bcrypt`
+- JWT tokens are generated after successful login
+- JWT tokens are stored in `httpOnly` cookies
+- Protected routes verify the authentication token
+- Users can only access and manage their own books
+
+## Book Management
+
+Each book can contain:
+
+- Title
+- Author
+- Tags
+- Reading status
+
+Supported reading statuses:
+
+```text
+Want to Read
+Reading
+Completed
+```
+
+Users can:
+
+- Add books
+- Edit books
+- Delete books
+- Filter books by status
+- Filter books by tag
+- View dashboard statistics
+
+## Database
+
+MongoDB is used as the application's database, with Mongoose providing schema modeling and database interaction.
+
+The application stores:
+
+- User accounts
+- Hashed passwords
+- Book collections
+- Book metadata
+- Reading status
+- Tags
 
 ## Deployment
 
 ### Vercel + MongoDB Atlas
 
-1. Push your code to GitHub
-2. Create a [MongoDB Atlas](https://www.mongodb.com/atlas) cluster and get your connection string
-3. Import the project on [Vercel](https://vercel.com)
-4. Add environment variables (`MONGODB_URI`, `JWT_SECRET`) in Vercel project settings
-5. Deploy
+1. Push the project to GitHub.
+2. Create a MongoDB Atlas cluster.
+3. Get the MongoDB connection string.
+4. Import the GitHub repository into Vercel.
+5. Add the following environment variables in Vercel:
+
+```text
+MONGODB_URI
+JWT_SECRET
+```
+
+6. Deploy the application.
+
+After deployment, Vercel will provide a public URL for the application.
+
+## Environment Variables
+
+| Variable | Description |
+|---|---|
+| `MONGODB_URI` | MongoDB connection string |
+| `JWT_SECRET` | Long random secret used to sign JWT tokens |
+
+Example:
+
+```env
+MONGODB_URI=mongodb+srv://username:password@cluster.mongodb.net/book-manager
+JWT_SECRET=your_long_random_secret
+```
+
+**Do not use the example values in production.**
 
 ## Scripts
 
-\`\`\`bash
-npm run dev      # Start development server
-npm run build    # Build for production
-npm run start    # Start production server
-npm run lint     # Run ESLint
-\`\`\`
+```bash
+npm run dev
+```
+
+Starts the development server.
+
+```bash
+npm run build
+```
+
+Creates a production build.
+
+```bash
+npm run start
+```
+
+Starts the production server.
+
+```bash
+npm run lint
+```
+
+Runs ESLint.
+
+## License
+
+MIT
