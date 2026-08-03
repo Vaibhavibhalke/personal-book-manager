@@ -105,22 +105,28 @@ export default function Dashboard({ user, initialBooks }: DashboardProps) {
   }
 
   return (
-    <div className="min-h-full bg-stone-50">
+    <div className="page-bg min-h-full">
       <Navbar user={user} />
 
-      <main className="mx-auto max-w-6xl px-4 py-8 sm:px-6">
-        <div className="mb-8">
-          <h1 className="font-serif text-3xl font-semibold text-stone-800">
-            Your Reading Shelf
-          </h1>
-          <p className="mt-1 text-stone-500">
-            Track what you want to read, what you&apos;re reading, and what
-            you&apos;ve finished.
-          </p>
-        </div>
+      <main className="relative mx-auto max-w-6xl px-4 py-8 sm:px-6">
+        <section className="animate-float-in mb-8 overflow-hidden rounded-[2rem] border border-white/60 bg-gradient-to-r from-stone-900 via-amber-900 to-orange-900 p-8 text-white shadow-2xl shadow-stone-900/20">
+          <div className="absolute -right-8 -top-8 h-40 w-40 rounded-full bg-white/10 blur-3xl" />
+          <div className="relative max-w-2xl">
+            <p className="text-xs font-semibold uppercase tracking-[0.35em] text-amber-200/80">
+              Dashboard
+            </p>
+            <h1 className="section-title mt-3 text-4xl font-semibold sm:text-5xl">
+              Your Reading Shelf
+            </h1>
+            <p className="mt-3 text-base text-amber-100/85 sm:text-lg">
+              Welcome back, {user.name.split(" ")[0]}. Track what you want to
+              read, what you&apos;re reading, and what you&apos;ve finished.
+            </p>
+          </div>
+        </section>
 
         {error && (
-          <div className="mb-6 rounded-lg bg-red-50 px-4 py-3 text-sm text-red-700">
+          <div className="mb-6 rounded-2xl border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700">
             {error}
           </div>
         )}
@@ -135,50 +141,65 @@ export default function Dashboard({ user, initialBooks }: DashboardProps) {
             onCancel={editingBook ? () => setEditingBook(null) : undefined}
           />
 
-          <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
-            <h2 className="font-serif text-xl font-semibold text-stone-800">
-              Your Books
-            </h2>
-            <FilterBar
-              statusFilter={statusFilter}
-              tagFilter={tagFilter}
-              allTags={allTags}
-              onStatusChange={setStatusFilter}
-              onTagChange={setTagFilter}
-              onClear={() => {
-                setStatusFilter("");
-                setTagFilter("");
-              }}
-            />
-          </div>
+          <div className="glass-card rounded-3xl p-5 sm:p-6">
+            <div className="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
+              <div>
+                <p className="text-xs font-semibold uppercase tracking-[0.24em] text-stone-400">
+                  Collection
+                </p>
+                <h2 className="section-title mt-1 text-2xl font-semibold text-stone-900">
+                  Your Books
+                </h2>
+                <p className="mt-1 text-sm text-stone-500">
+                  {filteredBooks.length} of {books.length} books shown
+                </p>
+              </div>
+              <FilterBar
+                statusFilter={statusFilter}
+                tagFilter={tagFilter}
+                allTags={allTags}
+                onStatusChange={setStatusFilter}
+                onTagChange={setTagFilter}
+                onClear={() => {
+                  setStatusFilter("");
+                  setTagFilter("");
+                }}
+              />
+            </div>
 
-          {filteredBooks.length === 0 ? (
-            <div className="rounded-xl border border-dashed border-stone-300 bg-white py-16 text-center">
-              <span className="text-4xl" aria-hidden="true">
-                📖
-              </span>
-              <p className="mt-3 font-medium text-stone-700">
-                {books.length === 0 ? "No books yet" : "No books match your filters"}
-              </p>
-              <p className="mt-1 text-sm text-stone-500">
-                {books.length === 0
-                  ? "Add your first book above to start building your collection."
-                  : "Try adjusting your filters to see more books."}
-              </p>
-            </div>
-          ) : (
-            <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-              {filteredBooks.map((book) => (
-                <BookCard
-                  key={book._id}
-                  book={book}
-                  onEdit={setEditingBook}
-                  onDelete={handleDelete}
-                  onStatusChange={handleStatusChange}
-                />
-              ))}
-            </div>
-          )}
+            {filteredBooks.length === 0 ? (
+              <div className="mt-6 rounded-[1.75rem] border border-dashed border-stone-300/80 bg-white/60 py-16 text-center">
+                <div className="mx-auto flex h-20 w-20 items-center justify-center rounded-3xl bg-amber-50 text-4xl">
+                  📖
+                </div>
+                <p className="mt-4 font-serif text-xl font-semibold text-stone-800">
+                  {books.length === 0 ? "Your shelf is waiting" : "No books match your filters"}
+                </p>
+                <p className="mt-2 text-sm text-stone-500">
+                  {books.length === 0
+                    ? "Add your first book above to start building your collection."
+                    : "Try adjusting your filters to see more books."}
+                </p>
+              </div>
+            ) : (
+              <div className="mt-6 grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
+                {filteredBooks.map((book, index) => (
+                  <div
+                    key={book._id}
+                    className="animate-float-in"
+                    style={{ animationDelay: `${index * 60}ms` }}
+                  >
+                    <BookCard
+                      book={book}
+                      onEdit={setEditingBook}
+                      onDelete={handleDelete}
+                      onStatusChange={handleStatusChange}
+                    />
+                  </div>
+                ))}
+              </div>
+            )}
+          </div>
         </div>
       </main>
     </div>

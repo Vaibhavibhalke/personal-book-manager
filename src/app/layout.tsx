@@ -1,14 +1,14 @@
 import type { Metadata } from "next";
-import { Lora, Source_Sans_3 } from "next/font/google";
+import { Fraunces, Plus_Jakarta_Sans } from "next/font/google";
 import "./globals.css";
 
-const lora = Lora({
+const fraunces = Fraunces({
   variable: "--font-serif",
   subsets: ["latin"],
   weight: ["400", "600", "700"],
 });
 
-const sourceSans = Source_Sans_3({
+const jakarta = Plus_Jakarta_Sans({
   variable: "--font-sans",
   subsets: ["latin"],
 });
@@ -26,9 +26,11 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${lora.variable} ${sourceSans.variable} h-full antialiased`}
+      className={`${fraunces.variable} ${jakarta.variable} h-full antialiased`}
     >
-      <body className="min-h-full flex flex-col font-sans">{children}</body>
+      <body className="min-h-full flex flex-col font-sans text-stone-900">
+        {children}
+      </body>
     </html>
   );
 }

@@ -1,4 +1,3 @@
-
 # Personal Book Manager
 
 A full-stack reading list app built with Next.js, MongoDB, and JWT authentication. Track books you want to read, are currently reading, or have completed — with tags and filters to organize your collection.
@@ -10,6 +9,34 @@ A full-stack reading list app built with Next.js, MongoDB, and JWT authenticatio
 - **Reading statuses** — Want to Read, Reading, Completed
 - **Filters** — Filter your collection by status or tag
 - **Dashboard** — Overview stats and quick status updates
+
+## Screenshots
+
+### Login
+
+![Login page](./screenshots/login.png)
+
+### Sign up
+
+![Sign up page with existing account error](./screenshots/signup-error.png)
+
+### Dashboard
+
+![Empty dashboard](./screenshots/dashboard-empty.png)
+
+![Dashboard with stats](./screenshots/dashboard-stats.png)
+
+### Add & manage books
+
+![Add a book and view collection](./screenshots/add-book-collection.png)
+
+![Edit a book](./screenshots/edit-book.png)
+
+### Filters
+
+![No books match filters](./screenshots/filter-no-results.png)
+
+![Login page filled in](./screenshots/login-filled.png)
 
 ## Tech Stack
 
@@ -113,6 +140,3 @@ npm run build    # Build for production
 npm run start    # Start production server
 npm run lint     # Run ESLint
 ```
-
-
-
